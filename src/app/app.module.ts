@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { GaugeModule } from 'angular-gauge';
@@ -14,6 +14,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchBarComponent } from './componenets/search-bar/search-bar.component';
 import { HomeComponent } from './componenets/home/home.component';
+import { HttpHeadersInterceptor } from 'src/interceptors/http-headers.interceptor';
+import { HttpErrorsInterceptor } from 'src/interceptors/http-errors.interceptor';
+import { DetailsComponent } from './componenets/details/details.component';
 
 const routes: Routes = [
   {
@@ -23,6 +26,10 @@ const routes: Routes = [
   {
     path: 'search/:game-search',
     component: HomeComponent
+  },
+  {
+    path: 'details/:id',
+    component: DetailsComponent
   }
 ];
 
@@ -30,7 +37,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     SearchBarComponent,
-    HomeComponent
+    HomeComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +52,18 @@ const routes: Routes = [
     MatSelectModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpHeadersInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorsInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
