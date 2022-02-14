@@ -17,6 +17,7 @@ import { HomeComponent } from './componenets/home/home.component';
 import { HttpHeadersInterceptor } from 'src/interceptors/http-headers.interceptor';
 import { HttpErrorsInterceptor } from 'src/interceptors/http-errors.interceptor';
 import { DetailsComponent } from './componenets/details/details.component';
+import { GameTabsComponent } from './componenets/game-tabs/game-tabs.component';
 
 const routes: Routes = [
   {
@@ -38,15 +39,16 @@ const routes: Routes = [
     AppComponent,
     SearchBarComponent,
     HomeComponent,
-    DetailsComponent
+    DetailsComponent,
+    GameTabsComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    GaugeModule.forRoot(),
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    GaugeModule.forRoot(),
     MatFormFieldModule,
     MatTabsModule,
     MatSelectModule,
